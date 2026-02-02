@@ -58,7 +58,7 @@ python manage.py runserver
 
 ## Visit http://127.0.0.1:8000/ in your browser.
 
-#### Project Structure
+## Project Structure
 core/: Project configuration, settings, and root URL routing.
 
 shortener/: The main application logic containing:
@@ -71,7 +71,7 @@ utils.py: The Base62 encoding utility function.
 
 templates/: HTML views for the Dashboard, Login, and Registration pages.
 
-#### 🧠 Technical Details: Base62 Logic
+## 🧠 Technical Details: Base62 Logic
 The application converts the unique primary key (ID) of each database record into a Base62 string. This ensures that every short link is unique and the length remains as short as possible without the need for random string collision checks.
 
 Conversion Examples:
@@ -85,16 +85,5 @@ This method allows for billions of unique URLs using only 6 or 7 characters.
 
 ***
 
-### 🚀 Ready to upload?
-Now that your README is perfect, you can push your code to GitHub. If you haven't initialized your repository yet, run these commands in your project folder:
 
 
-
-1. `git init`
-2. `git add .`
-3. `git commit -m "Initial commit: Full URL Shortener functionality"`
-4. `git branch -M main`
-5. `git remote add origin https://github.com/yourusername/your-repo-name.git`
-6. `git push -u origin main`
-
-**Would you like me to double-check any of your Python files (like `models.py` or `views.py`) one last time to make sure they match the README perfectly?**
