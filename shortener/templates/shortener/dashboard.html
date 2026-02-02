@@ -1,60 +1,55 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>URL Shortener Dashboard</title>
-    <style>
-        body { font-family: sans-serif; margin: 40px; line-height: 1.6; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #f4f4f4; }
-        .stats { color: #666; font-size: 0.9em; }
-    </style>
-</head>
-<body>
-    <h2>Welcome, {{ user.username }}!</h2>
-    
-    <form action="{% url 'logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
+{% extends 'shortener/base.html' %}
 
-    <hr>
+{% block content %}
+<div class="row">
+    <div class="col-md-10 mx-auto">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title mb-3">Shorten a New URL</h4>
+                <form method="post" class="row g-2">
+                    {% csrf_token %}
+                    <div class="col-md-9">
+                        <input type="url" name="original_url" class="form-control form-control-lg" placeholder="Paste your long link here..." required>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary btn-lg w-100">Shorten</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-    <h3>Shorten a new URL</h3>
-    <form method="post">
-        {% csrf_token %}
-        <input type="url" name="original_url" placeholder="https://example.com" required style="width: 300px; padding: 8px;">
-        <button type="submit" style="padding: 8px 15px;">Shorten</button>
-    </form>
-
-    <h3>Your Managed URLs</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Short Link</th>
-                <th>Original URL</th>
-                <th>Created At</th>
-                <th>Clicks (Analytics)</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for url in urls %}
-            <tr>
-                <td><a href="{% url 'redirect' url.short_key %}" target="_blank">/{{ url.short_key }}</a></td>
-                <td>{{ url.original_url }}</td>
-                <td>{{ url.created_at|date:"M d, Y" }}</td>
-                <td><strong>{{ url.clicks }}</strong></td>
-                <td>
-                    <a href="{% url 'delete_url' url.id %}" onclick="return confirm('Are you sure?')">Delete</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="5">No URLs shortened yet.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title mb-3">Your Links</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Short Link</th>
+                                <th>Original Destination</th>
+                                <th>Clicks</th>
+                                <th>Created</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for url in urls %}
+                            <tr>
+                                <td><a href="{% url 'redirect' url.short_key %}" class="text-decoration-none fw-bold" target="_blank">/{{ url.short_key }}</a></td>
+                                <td class="text-truncate" style="max-width: 250px;">{{ url.original_url }}</td>
+                                <td><span class="badge bg-info text-dark">{{ url.clicks }} clicks</span></td>
+                                <td class="text-muted small">{{ url.created_at|date:"M d, Y" }}</td>
+                                <td class="text-end">
+                                    <a href="{% url 'edit_url' url.id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <a href="{% url 'delete_url' url.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this link?')">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

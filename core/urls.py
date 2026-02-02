@@ -18,8 +18,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
-from django.contrib.auth import views as auth_views  # Essential import
-from shortener import views as short_views           # Essential import
+from django.contrib.auth import views as auth_views 
+from shortener import views as short_views           # We use 'short_views' here
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,6 +32,9 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('register/', short_views.register, name='register'),
     
-    # App Routes (includes dashboard, redirect, and delete)
-    path('', include('shortener.urls')),
+    # App Routes
+    path('dashboard/', short_views.dashboard, name='dashboard'),
+    path('delete/<int:pk>/', short_views.delete_url, name='delete_url'),
+    path('edit/<int:pk>/', short_views.edit_url, name='edit_url'), # Fixed the name here
+    path('<str:short_key>/', short_views.redirect_url, name='redirect'),
 ]

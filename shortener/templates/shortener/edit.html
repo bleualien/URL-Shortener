@@ -1,0 +1,32 @@
+{% extends 'shortener/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card shadow-sm border-0 mt-5">
+            <div class="card-body p-4">
+                <h3 class="card-title mb-4">Edit Short Link</h3>
+                
+                <div class="alert alert-light border small py-2">
+                    <strong>Current Short Link:</strong> /{{ url.short_key }}
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Update Destination URL</label>
+                        <input type="url" name="original_url" class="form-control form-control-lg" 
+                               value="{{ url.original_url }}" placeholder="https://example.com" required>
+                        <div class="form-text text-muted">Enter the new long URL this link should point to.</div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+                        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary px-4">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
