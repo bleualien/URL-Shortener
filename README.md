@@ -26,6 +26,7 @@ A robust web application built with Python and the Django framework that allows 
 ```bash
 git clone [https://github.com/yourusername/url-shortener.git](https://github.com/yourusername/url-shortener.git)
 cd url-shortener
+```
 
 ### 2. Set up the Environment
 Make sure you have Python installed. It is recommended to use a virtual environment.
@@ -41,16 +42,19 @@ source venv/bin/activate
 
 # Install Django
 pip install django
+```
 
 ### 3. Initialize the Database
 Run migrations to create the necessary tables for users and short URLs.
 ```bash
 python manage.py makemigrations
 python manage.py migrate
+```
 
 ### 4. Run the Application
 ```bash
 python manage.py runserver
+```
 
 ## Visit http://127.0.0.1:8000/ in your browser.
 
