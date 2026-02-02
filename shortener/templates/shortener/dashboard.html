@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Shortener Dashboard</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; line-height: 1.6; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .stats { color: #666; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <h2>Welcome, {{ user.username }}!</h2>
+    
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+
+    <hr>
+
+    <h3>Shorten a new URL</h3>
+    <form method="post">
+        {% csrf_token %}
+        <input type="url" name="original_url" placeholder="https://example.com" required style="width: 300px; padding: 8px;">
+        <button type="submit" style="padding: 8px 15px;">Shorten</button>
+    </form>
+
+    <h3>Your Managed URLs</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Short Link</th>
+                <th>Original URL</th>
+                <th>Created At</th>
+                <th>Clicks (Analytics)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for url in urls %}
+            <tr>
+                <td><a href="{% url 'redirect' url.short_key %}" target="_blank">/{{ url.short_key }}</a></td>
+                <td>{{ url.original_url }}</td>
+                <td>{{ url.created_at|date:"M d, Y" }}</td>
+                <td><strong>{{ url.clicks }}</strong></td>
+                <td>
+                    <a href="{% url 'delete_url' url.id %}" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No URLs shortened yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
