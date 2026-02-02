@@ -10,11 +10,7 @@ db.sqlite3-journal
 # Local environment files
 .python
 python/
-.env
-.venv
-env/
-venv/
-ENV/
+
 
 # OS generated files
 .DS_Store
