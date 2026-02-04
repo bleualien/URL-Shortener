@@ -6,8 +6,8 @@ class ShortURL(models.Model):
     original_url = models.URLField(max_length=500)
     short_key = models.CharField(max_length=15, unique=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)  # Requirement: Creation Date
-    clicks = models.IntegerField(default=0)             # Requirement: Analytics
+    created_at = models.DateTimeField(auto_now_add=True)  
+    clicks = models.IntegerField(default=0)             
 
     def save(self, *args, **kwargs):
         if not self.short_key:
