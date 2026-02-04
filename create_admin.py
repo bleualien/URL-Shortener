@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 username = 'admin'  # Change this if you want
-password = 'YourSecurePassword123' # Change this!
+password = 'Saina123' # Change this!
 email = 'admin@example.com'
 
 if not User.objects.filter(username=username).exists():
