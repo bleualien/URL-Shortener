@@ -59,3 +59,23 @@ def delete_url(request, pk):
     url = get_object_or_404(ShortURL, pk=pk, user=request.user)
     url.delete()
     return redirect('dashboard')
+
+from django.contrib.auth.decorators import user_passes_test
+
+# Function to check if user is staff
+def is_staff(user):
+    return user.is_staff
+
+@login_required
+@user_passes_test(is_staff)
+def global_history(request):
+    # Fetch all links, including the 'user' relationship to avoid multiple DB hits
+    all_urls = ShortURL.objects.select_related('user').all().order_by('-created_at')
+    
+    context = {
+        'urls': all_urls,
+        'total_links': all_urls.count(),
+        # Total clicks across the whole platform
+        'total_clicks': sum(url.clicks for url in all_urls)
+    }
+    return render(request, 'shortener/global_history.html', context)

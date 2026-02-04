@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>🌍 Global Link History (Admin)</h2>
+        <div>
+            <span class="badge bg-primary">Total Links: {{ total_links }}</span>
+            <span class="badge bg-success">Total Clicks: {{ total_clicks }}</span>
+        </div>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Owner</th>
+                        <th>Original URL</th>
+                        <th>Short Link</th>
+                        <th>Clicks</th>
+                        <th>Date Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for url in urls %}
+                    <tr>
+                        <td><strong>{{ url.user.username }}</strong></td>
+                        <td class="text-truncate" style="max-width: 250px;">{{ url.original_url }}</td>
+                        <td><a href="{% url 'redirect_url' url.short_key %}" target="_blank">{{ url.short_key }}</a></td>
+                        <td><span class="badge rounded-pill bg-info text-dark">{{ url.clicks }}</span></td>
+                        <td>{{ url.created_at|date:"M d, Y" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5" class="text-center">No links created yet.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

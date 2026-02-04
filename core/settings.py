@@ -94,11 +94,8 @@ LOGOUT_REDIRECT_URL = 'login'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# 1. Tell Django to trust the Render proxy for HTTPS
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# 2. Add your specific Render domain to the trusted origins
-# Replace the URL below with your actual Render URL
 CSRF_TRUSTED_ORIGINS = [
     'https://url-shortener-06d1.onrender.com',
     'https://*.onrender.com'
