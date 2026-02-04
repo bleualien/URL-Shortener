@@ -35,7 +35,9 @@ urlpatterns = [
     # App Routes
     path('dashboard/', short_views.dashboard, name='dashboard'),
     path('delete/<int:pk>/', short_views.delete_url, name='delete_url'),
-    path('edit/<int:pk>/', short_views.edit_url, name='edit_url'), # Fixed the name here
+    path('edit/<int:pk>/', short_views.edit_url, name='edit_url'),
+    path('admin-history/', short_views.global_history, name='global_history'),
+
+    # Catch-all for redirection
     path('<str:short_key>/', short_views.redirect_url, name='redirect'),
-    path('admin-history/', views.global_history, name='global_history'),
 ]
