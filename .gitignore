@@ -15,6 +15,7 @@ python/
 # OS generated files
 .DS_Store
 Thumbs.db
+r.txt
 
 # Static files and media (optional)
 /static/
