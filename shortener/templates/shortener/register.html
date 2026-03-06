@@ -13,6 +13,21 @@
                 <form method="post">
                     {% csrf_token %}
                     
+                    {% if form.errors %}
+                        <div class="alert alert-danger small">
+                            <ul class="mb-0">
+                                {% for field in form %}
+                                    {% for error in field.errors %}
+                                        <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                                {% for error in form.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
                     <div class="registration-form">
                         {{ form.as_p }}
                     </div>
@@ -31,10 +46,10 @@
 </div>
 
 <style>
-    /* Quick CSS to make Django's default form look better with Bootstrap */
-    .registration-form p {
-        margin-bottom: 1rem;
-    }
+    /* CSS to make Django's error list look better */
+    .alert ul { list-style: none; padding-left: 0; }
+    
+    .registration-form p { margin-bottom: 1rem; }
     .registration-form input {
         display: block;
         width: 100%;
@@ -51,6 +66,14 @@
         font-size: 0.825rem;
         color: #6c757d;
         margin-top: 4px;
+    }
+    /* Style for the built-in error list inside the form fields */
+    .errorlist {
+        color: #dc3545;
+        font-size: 0.875rem;
+        list-style: none;
+        padding-left: 0;
+        margin-top: 5px;
     }
 </style>
 {% endblock %}

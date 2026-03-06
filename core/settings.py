@@ -62,9 +62,13 @@ DATABASES = {
     "default": dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
         conn_max_age=600,
-        ssl_require=not DEBUG  # Require SSL only in production
+        # ssl_require=not DEBUG  # Require SSL only in production
     )
 }
+if 'sqlite' not in DATABASES['default']['ENGINE']:
+    DATABASES['default']['OPTIONS'] = {
+        'sslmode': 'require',
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
